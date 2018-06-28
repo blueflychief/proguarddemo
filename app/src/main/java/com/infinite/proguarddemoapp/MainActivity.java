@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
+import com.infinite.aesjnilib.AESEncrypt;
+import com.infinite.aesjnilib.SignatureTool;
 import com.infinite.proguarddemoapp.entity.MusicEntity;
 import com.infinite.proguarddemoapp.entity.VideoEntity;
 import com.infinite.proguarddemoapp.utils.CommenUtil;
@@ -15,6 +17,8 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
+    private final String str = "123abcABC*%!~#+_/中文测试";
+    private final String ecode = "SkiDk/JC5F/BXKf/np7rWNub7ibxzYMjKwkQ7A6AqPw=";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +32,14 @@ public class MainActivity extends AppCompatActivity {
 
         Log.e(TAG, "videoEntities to string: " + JSON.toJSONString(videoEntities));
         Log.e(TAG, "musicEntities to string: " + JSON.toJSONString(musicEntities));
+
+        int signature = SignatureTool.getSignature(this);
+        Log.e(TAG, "signature: " + signature);
+
+
+        String code = AESEncrypt.decode(this, ecode);
+
+        Log.d(TAG + "aescode1", "source code:" + ecode + "\t decode code:" + code);
 
     }
 
